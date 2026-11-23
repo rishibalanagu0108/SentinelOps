@@ -1,0 +1,728 @@
+{
+  "schema_version": 2,
+  "project": {
+    "name": "SentinelOps",
+    "mode": "init",
+    "profile": "prototype",
+    "objective": "Build a local-first incident-response system that runs reproducible failures against a disposable application, investigates evidence, and performs only human-approved remediation while remaining ready for future external integrations.",
+    "constraints": [
+      "Local Docker Compose is the first supported runtime.",
+      "Product code must not target real production infrastructure in the initial release."
+    ],
+    "non_goals": [
+      "External SaaS, observability, incident-management, and cloud connectors in the initial release.",
+      "Unattended production remediation."
+    ],
+    "trust_boundary": "local developer machine and disposable Docker environment",
+    "created_at": "2026-11-23T17:27:12.743Z",
+    "updated_at": "2026-11-23T18:10:37.680Z"
+  },
+  "policy": {
+    "ponytail": "full",
+    "autonomy": "human-in-the-loop",
+    "learned_rule_promotion": "human-required",
+    "cleanup": "propose-only",
+    "traces": {
+      "storage": "local",
+      "commit_raw": false,
+      "redact_secrets": true
+    }
+  },
+  "lifecycle": {
+    "phase": "planning",
+    "status": "active",
+    "active_task": null,
+    "blocker": null,
+    "next_action": "Finish defining requirement-linked tasks, then run genesis plan check."
+  },
+  "commands": {},
+  "workflow": {
+    "type": "new-product",
+    "started_at": "2026-11-23T17:27:12.744Z",
+    "spec_check": {
+      "at": "2026-11-23T17:28:33.860Z",
+      "source_hash": "f751e00d59318b0d152688a0d2c1d88610bdd4227bc47498d9c04a120af30960",
+      "requirements": [
+        "AC-1",
+        "AC-2",
+        "AC-3",
+        "AC-4",
+        "AC-5",
+        "AC-6",
+        "AC-7",
+        "AC-8",
+        "AC-9",
+        "FR-1",
+        "FR-10",
+        "FR-11",
+        "FR-12",
+        "FR-13",
+        "FR-14",
+        "FR-15",
+        "FR-16",
+        "FR-2",
+        "FR-3",
+        "FR-4",
+        "FR-5",
+        "FR-6",
+        "FR-7",
+        "FR-8",
+        "FR-9",
+        "NFR-1",
+        "NFR-2",
+        "NFR-3",
+        "NFR-4",
+        "NFR-5",
+        "NFR-6",
+        "NFR-7",
+        "NFR-8"
+      ]
+    },
+    "plan_check": {
+      "at": "2026-11-23T17:59:42.893Z",
+      "source_hash": "c9ed4e2ec60804e3cbf58ee22a4eada6219734834d7bc5566977bc3f4491c75b"
+    },
+    "plan_approval": null
+  },
+  "artifacts": [
+    {
+      "id": "SPEC-1",
+      "type": "specification",
+      "path": "SPEC.md",
+      "status": "approved",
+      "requirements": [
+        "AC-1",
+        "AC-2",
+        "AC-3",
+        "AC-4",
+        "AC-5",
+        "AC-6",
+        "AC-7",
+        "AC-8",
+        "AC-9",
+        "FR-1",
+        "FR-10",
+        "FR-11",
+        "FR-12",
+        "FR-13",
+        "FR-14",
+        "FR-15",
+        "FR-16",
+        "FR-2",
+        "FR-3",
+        "FR-4",
+        "FR-5",
+        "FR-6",
+        "FR-7",
+        "FR-8",
+        "FR-9",
+        "NFR-1",
+        "NFR-2",
+        "NFR-3",
+        "NFR-4",
+        "NFR-5",
+        "NFR-6",
+        "NFR-7",
+        "NFR-8"
+      ],
+      "source_hash": "f751e00d59318b0d152688a0d2c1d88610bdd4227bc47498d9c04a120af30960",
+      "approval": {
+        "human": "Project owner",
+        "reason": "The user explicitly approved the SentinelOps specification in the Codex chat on 2026-11-23.",
+        "at": "2026-11-23T17:58:22.282Z",
+        "source_hash": "f751e00d59318b0d152688a0d2c1d88610bdd4227bc47498d9c04a120af30960"
+      }
+    }
+  ],
+  "assumptions": [],
+  "invariants": [
+    {
+      "id": "INVARIANT-02a78e29",
+      "text": "No product implementation code may be written until the current Genesis specification and plan are explicitly approved by the human.",
+      "source": "User instruction in this Codex chat on 2026-11-23",
+      "recorded_at": "2026-11-23T17:28:27.665Z",
+      "paths": [],
+      "tags": []
+    }
+  ],
+  "decisions": [
+    {
+      "id": "DECISION-2fc34efe",
+      "title": "Local-first validation",
+      "text": "Build and prove the complete incident workflow against a disposable Docker Compose application before adding external project connectors.",
+      "status": "accepted",
+      "source": "User discussion in this Codex chat on 2026-11-23",
+      "recorded_at": "2026-11-23T17:28:27.144Z",
+      "paths": [],
+      "tags": []
+    },
+    {
+      "id": "DECISION-9484f45a",
+      "title": "Human-approved remediation",
+      "text": "All state-changing remediation is allowlisted, scoped to the active incident, and blocked until a human explicitly approves it.",
+      "status": "accepted",
+      "source": "User discussion in this Codex chat on 2026-11-23",
+      "recorded_at": "2026-11-23T17:28:27.271Z",
+      "paths": [],
+      "tags": []
+    },
+    {
+      "id": "DECISION-aa3a1a57",
+      "title": "Incremental incident catalog",
+      "text": "Implement the faulty payments deployment first, then database connection exhaustion, then Redis unavailability; run scenarios sequentially and reset between them.",
+      "status": "accepted",
+      "source": "User discussion in this Codex chat on 2026-11-23",
+      "recorded_at": "2026-11-23T17:28:27.389Z",
+      "paths": [],
+      "tags": []
+    },
+    {
+      "id": "DECISION-c40854e0",
+      "title": "Connector-ready without plugin framework",
+      "text": "Keep local telemetry, runtime, deployment, and remediation access behind simple module boundaries. Do not build dynamic plugins or external adapters until the local workflow is proven.",
+      "status": "accepted",
+      "source": "Genesis Ponytail full and user discussion in this Codex chat on 2026-11-23",
+      "recorded_at": "2026-11-23T17:28:27.526Z",
+      "paths": [],
+      "tags": []
+    }
+  ],
+  "knowledge": [
+    {
+      "id": "KNOWLEDGE-50782572",
+      "title": "Local toolchain",
+      "text": "Docker 29.8.2, Docker Compose 5.6.0, Python 3.12.3, Node 24.13.0, npm 11.6.2, and GNU Make 4.3 are available in the workspace environment.",
+      "source": "Commands executed in the workspace on 2026-11-23",
+      "tags": [],
+      "recorded_at": "2026-11-23T17:28:27.795Z",
+      "paths": []
+    }
+  ],
+  "tasks": [
+    {
+      "id": "SPEC-1",
+      "outcome": "Produce an approved, implementation-ready product specification",
+      "state": "done",
+      "risk": "medium",
+      "owner": null,
+      "scope": [
+        "SPEC.md"
+      ],
+      "dependencies": [],
+      "requirements": [],
+      "gates": [
+        {
+          "id": "independent-review",
+          "command": "",
+          "mandatory": true,
+          "status": "pass",
+          "evidence": {
+            "human": "Project owner",
+            "reason": "The user explicitly approved the SentinelOps specification in the Codex chat on 2026-11-23.",
+            "source_hash": "3bc358067adffbe0abe6a42f96f2f989f8d5d152e08bccb2e0b9119d79e26b14",
+            "observed_at": "2026-11-23T17:58:22.282Z"
+          },
+          "kind": "review"
+        }
+      ],
+      "next_action": "Interview the human, record durable context, and replace every placeholder in SPEC.md.",
+      "blocker": null,
+      "notes": [],
+      "failures": [],
+      "limitations": [],
+      "created_at": "2026-11-23T17:27:12.744Z",
+      "updated_at": "2026-11-23T17:58:22.282Z"
+    },
+    {
+      "id": "FOUNDATION-1",
+      "outcome": "Create the healthy disposable local application and repeatable lifecycle commands",
+      "state": "queued",
+      "risk": "low",
+      "owner": null,
+      "scope": [
+        "compose.yaml",
+        "Makefile",
+        "services",
+        "scripts/verify_stack.py",
+        "README.md"
+      ],
+      "dependencies": [],
+      "requirements": [
+        "FR-1",
+        "FR-16",
+        "NFR-1",
+        "NFR-4",
+        "NFR-6",
+        "AC-1"
+      ],
+      "inputs": [],
+      "environment": [
+        "Local Docker Compose"
+      ],
+      "scenarios": [
+        {
+          "id": "healthy-local-stack",
+          "actor": "developer",
+          "scope": "gateway, orders, payments, PostgreSQL, and Redis",
+          "environment": "local Docker Compose",
+          "duration": "five minutes after dependencies are available",
+          "observable": "all service health checks pass from a documented command",
+          "gate": "healthy-stack"
+        }
+      ],
+      "gates": [
+        {
+          "id": "healthy-stack",
+          "kind": "command",
+          "command": "python3 scripts/verify_stack.py",
+          "mandatory": true,
+          "status": "pending",
+          "evidence": null
+        }
+      ],
+      "next_action": "Implement only the healthy local stack and its executable health verification.",
+      "blocker": null,
+      "notes": [],
+      "failures": [],
+      "limitations": [],
+      "created_at": "2026-11-23T17:59:37.259Z",
+      "updated_at": "2026-11-23T17:59:37.260Z"
+    },
+    {
+      "id": "INCIDENT-1",
+      "outcome": "Add the scenario contract and reproducible faulty-payments-deployment incident",
+      "state": "queued",
+      "risk": "low",
+      "owner": null,
+      "scope": [
+        "scenarios",
+        "scripts/incident.py",
+        "scripts/verify_incident.py",
+        "Makefile",
+        "compose.yaml"
+      ],
+      "dependencies": [
+        "FOUNDATION-1"
+      ],
+      "requirements": [
+        "FR-2",
+        "FR-3",
+        "FR-4",
+        "FR-5",
+        "NFR-2",
+        "AC-2",
+        "AC-9"
+      ],
+      "inputs": [],
+      "environment": [
+        "Disposable local application"
+      ],
+      "scenarios": [
+        {
+          "id": "faulty-payments-deployment",
+          "actor": "developer",
+          "scope": "payments service only",
+          "environment": "disposable local application",
+          "duration": "five consecutive trigger and reset cycles",
+          "observable": "INC-001 produces expected failures and cleanup restores the healthy baseline every time",
+          "gate": "faulty-deploy"
+        }
+      ],
+      "gates": [
+        {
+          "id": "faulty-deploy",
+          "kind": "command",
+          "command": "python3 scripts/verify_incident.py INC-001 --repeat 5",
+          "mandatory": true,
+          "status": "pending",
+          "evidence": null
+        }
+      ],
+      "next_action": "Implement the smallest scenario runner and INC-001 without a plugin framework.",
+      "blocker": null,
+      "notes": [],
+      "failures": [],
+      "limitations": [],
+      "created_at": "2026-11-23T17:59:37.444Z",
+      "updated_at": "2026-11-23T17:59:37.444Z"
+    },
+    {
+      "id": "OBSERVE-1",
+      "outcome": "Instrument the local application and expose correlated incident evidence",
+      "state": "queued",
+      "risk": "low",
+      "owner": null,
+      "scope": [
+        "services",
+        "observability",
+        "compose.yaml",
+        "scripts/verify_observability.py"
+      ],
+      "dependencies": [
+        "INCIDENT-1"
+      ],
+      "requirements": [
+        "FR-6",
+        "FR-7",
+        "NFR-5",
+        "AC-3"
+      ],
+      "inputs": [],
+      "environment": [
+        "Local OpenTelemetry stack"
+      ],
+      "scenarios": [
+        {
+          "id": "correlated-evidence",
+          "actor": "incident investigator",
+          "scope": "INC-001 logs, metrics, traces, health, and deployment event",
+          "environment": "local OpenTelemetry stack",
+          "duration": "one incident run",
+          "observable": "the verifier retrieves correlated evidence for the known failure",
+          "gate": "incident-evidence"
+        }
+      ],
+      "gates": [
+        {
+          "id": "incident-evidence",
+          "kind": "command",
+          "command": "python3 scripts/verify_observability.py INC-001",
+          "mandatory": true,
+          "status": "pending",
+          "evidence": null
+        }
+      ],
+      "next_action": "Add only the telemetry needed to explain INC-001 and prove correlation.",
+      "blocker": null,
+      "notes": [],
+      "failures": [],
+      "limitations": [],
+      "created_at": "2026-11-23T17:59:37.615Z",
+      "updated_at": "2026-11-23T17:59:37.615Z"
+    },
+    {
+      "id": "CATALOG-1",
+      "outcome": "Complete the initial sequential incident catalog and reliable reset behavior",
+      "state": "queued",
+      "risk": "low",
+      "owner": null,
+      "scope": [
+        "scenarios",
+        "scripts/incident.py",
+        "scripts/verify_catalog.py",
+        "compose.yaml"
+      ],
+      "dependencies": [
+        "OBSERVE-1"
+      ],
+      "requirements": [
+        "FR-4",
+        "FR-5",
+        "NFR-2",
+        "AC-2"
+      ],
+      "inputs": [],
+      "environment": [
+        "Disposable local application"
+      ],
+      "scenarios": [
+        {
+          "id": "initial-incident-catalog",
+          "actor": "developer",
+          "scope": "INC-001, INC-002, and INC-003",
+          "environment": "disposable local application",
+          "duration": "five sequential runs per scenario",
+          "observable": "each incident exposes expected symptoms and resets to the verified baseline",
+          "gate": "incident-catalog"
+        }
+      ],
+      "gates": [
+        {
+          "id": "incident-catalog",
+          "kind": "command",
+          "command": "python3 scripts/verify_catalog.py --repeat 5",
+          "mandatory": true,
+          "status": "pending",
+          "evidence": null
+        }
+      ],
+      "next_action": "Add database exhaustion and Redis unavailability using the existing scenario contract.",
+      "blocker": null,
+      "notes": [],
+      "failures": [],
+      "limitations": [],
+      "created_at": "2026-11-23T17:59:37.777Z",
+      "updated_at": "2026-11-23T17:59:37.777Z"
+    },
+    {
+      "id": "AGENT-1",
+      "outcome": "Implement evidence-backed triage, investigation, diagnosis, and recorded-response evaluation",
+      "state": "queued",
+      "risk": "medium",
+      "owner": null,
+      "scope": [
+        "sentinelops",
+        "scripts/evaluate_agents.py",
+        "tests/recordings",
+        "pyproject.toml"
+      ],
+      "dependencies": [
+        "CATALOG-1"
+      ],
+      "requirements": [
+        "FR-7",
+        "FR-8",
+        "FR-9",
+        "FR-14",
+        "FR-15",
+        "FR-16",
+        "NFR-5",
+        "NFR-7",
+        "AC-4",
+        "AC-8"
+      ],
+      "inputs": [],
+      "environment": [
+        "Local SentinelOps control plane with recorded model responses"
+      ],
+      "scenarios": [
+        {
+          "id": "recorded-agent-evaluation",
+          "actor": "SRE evaluator",
+          "scope": "triage, investigation, and diagnosis across the initial catalog",
+          "environment": "local control plane without an API key",
+          "duration": "one fixed evaluation suite",
+          "observable": "at least 80 percent expected root-cause accuracy with evidence-linked findings and measured request usage",
+          "gate": "agent-evaluation"
+        }
+      ],
+      "gates": [
+        {
+          "id": "agent-evaluation",
+          "kind": "command",
+          "command": "python3 scripts/evaluate_agents.py --recorded --minimum-accuracy 0.80",
+          "mandatory": true,
+          "status": "pending",
+          "evidence": null
+        },
+        {
+          "id": "independent-review",
+          "kind": "review",
+          "command": "",
+          "mandatory": true,
+          "status": "pending",
+          "evidence": null
+        }
+      ],
+      "next_action": "Implement the minimum recorded-response agent workflow before enabling paid model calls.",
+      "blocker": null,
+      "notes": [],
+      "failures": [],
+      "limitations": [],
+      "created_at": "2026-11-23T17:59:37.950Z",
+      "updated_at": "2026-11-23T17:59:37.950Z"
+    },
+    {
+      "id": "SAFETY-1",
+      "outcome": "Add scoped approval, allowlisted remediation, rollback, and recovery verification",
+      "state": "queued",
+      "risk": "medium",
+      "owner": null,
+      "scope": [
+        "sentinelops/approval",
+        "sentinelops/remediation",
+        "scripts/verify_remediation.py",
+        "scenarios"
+      ],
+      "dependencies": [
+        "AGENT-1"
+      ],
+      "requirements": [
+        "FR-10",
+        "FR-11",
+        "FR-12",
+        "NFR-1",
+        "NFR-3",
+        "NFR-4",
+        "AC-5",
+        "AC-6"
+      ],
+      "inputs": [],
+      "environment": [
+        "Disposable local application"
+      ],
+      "scenarios": [
+        {
+          "id": "approval-gated-rollback",
+          "actor": "incident approver",
+          "scope": "INC-001 rollback only",
+          "environment": "disposable local application",
+          "duration": "one denied and one approved remediation attempt",
+          "observable": "unapproved mutation is blocked and approved rollback restores healthy payments",
+          "gate": "remediation-safety"
+        }
+      ],
+      "gates": [
+        {
+          "id": "remediation-safety",
+          "kind": "command",
+          "command": "python3 scripts/verify_remediation.py",
+          "mandatory": true,
+          "status": "pending",
+          "evidence": null
+        },
+        {
+          "id": "independent-review",
+          "kind": "review",
+          "command": "",
+          "mandatory": true,
+          "status": "pending",
+          "evidence": null
+        }
+      ],
+      "next_action": "Implement the approval boundary and only the INC-001 rollback action.",
+      "blocker": null,
+      "notes": [],
+      "failures": [],
+      "limitations": [],
+      "created_at": "2026-11-23T17:59:38.138Z",
+      "updated_at": "2026-11-23T17:59:38.138Z"
+    },
+    {
+      "id": "DURABILITY-1",
+      "outcome": "Persist incident workflow state and prevent duplicate remediation across worker restarts",
+      "state": "queued",
+      "risk": "medium",
+      "owner": null,
+      "scope": [
+        "sentinelops/workflow",
+        "infrastructure/temporal",
+        "compose.yaml",
+        "scripts/verify_recovery.py"
+      ],
+      "dependencies": [
+        "SAFETY-1"
+      ],
+      "requirements": [
+        "FR-13",
+        "NFR-8",
+        "AC-7"
+      ],
+      "inputs": [],
+      "environment": [
+        "Local Temporal development runtime"
+      ],
+      "scenarios": [
+        {
+          "id": "worker-restart-after-approval",
+          "actor": "reliability tester",
+          "scope": "approved INC-001 remediation workflow",
+          "environment": "local Temporal development runtime",
+          "duration": "one forced worker termination and restart",
+          "observable": "workflow resumes and rollback executes exactly once",
+          "gate": "workflow-recovery"
+        }
+      ],
+      "gates": [
+        {
+          "id": "workflow-recovery",
+          "kind": "command",
+          "command": "python3 scripts/verify_recovery.py",
+          "mandatory": true,
+          "status": "pending",
+          "evidence": null
+        },
+        {
+          "id": "independent-review",
+          "kind": "review",
+          "command": "",
+          "mandatory": true,
+          "status": "pending",
+          "evidence": null
+        }
+      ],
+      "next_action": "Add durable execution only around the proven incident and remediation workflow.",
+      "blocker": null,
+      "notes": [],
+      "failures": [],
+      "limitations": [],
+      "created_at": "2026-11-23T17:59:38.322Z",
+      "updated_at": "2026-11-23T17:59:38.323Z"
+    },
+    {
+      "id": "ACCEPTANCE-1",
+      "outcome": "Provide the complete replayable acceptance suite and fresh-developer workflow",
+      "state": "queued",
+      "risk": "low",
+      "owner": null,
+      "scope": [
+        "scripts/acceptance.py",
+        "README.md",
+        "Makefile",
+        "tests"
+      ],
+      "dependencies": [
+        "DURABILITY-1"
+      ],
+      "requirements": [
+        "FR-14",
+        "FR-15",
+        "NFR-6",
+        "NFR-7",
+        "AC-8",
+        "AC-9"
+      ],
+      "inputs": [],
+      "environment": [
+        "Fresh local checkout with recorded model responses"
+      ],
+      "scenarios": [
+        {
+          "id": "fresh-developer-acceptance",
+          "actor": "developer unfamiliar with the repository",
+          "scope": "setup, start, incident, inspection, reset, stop, and recorded evaluation",
+          "environment": "fresh local checkout without an LLM API key",
+          "duration": "one documented end-to-end session",
+          "observable": "the executable acceptance command completes all required local workflows",
+          "gate": "full-acceptance"
+        }
+      ],
+      "gates": [
+        {
+          "id": "full-acceptance",
+          "kind": "command",
+          "command": "python3 scripts/acceptance.py",
+          "mandatory": true,
+          "status": "pending",
+          "evidence": null
+        }
+      ],
+      "next_action": "Unify existing verified commands into one acceptance runner and finalize documentation.",
+      "blocker": null,
+      "notes": [],
+      "failures": [],
+      "limitations": [],
+      "created_at": "2026-11-23T17:59:38.506Z",
+      "updated_at": "2026-11-23T17:59:38.506Z"
+    }
+  ],
+  "learning_proposals": [],
+  "cleanup_proposals": [],
+  "controls": [],
+  "attempts": [],
+  "authorizations": [],
+  "experiments": [],
+  "incidents": [],
+  "discovery": null,
+  "checkpoint": {
+    "at": "2026-11-23T18:10:37.652Z",
+    "revision": {
+      "commit": null,
+      "dirty": null,
+      "source_hash": "921f41dcb79cc47de8894f1dc7ad25e19035cbdc6617146283e90e463f880cbb"
+    },
+    "active_task": null,
+    "next_action": "Finish defining requirement-linked tasks, then run genesis plan check."
+  },
+  "legacy": null
+}
