@@ -15,7 +15,7 @@
     ],
     "trust_boundary": "local developer machine and disposable Docker environment",
     "created_at": "2026-11-23T17:27:12.743Z",
-    "updated_at": "2026-11-23T18:10:37.680Z"
+    "updated_at": "2026-11-23T18:18:18.965Z"
   },
   "policy": {
     "ponytail": "full",
@@ -715,11 +715,11 @@
   "incidents": [],
   "discovery": null,
   "checkpoint": {
-    "at": "2026-11-23T18:10:37.652Z",
+    "at": "2026-11-23T18:18:18.928Z",
     "revision": {
-      "commit": null,
-      "dirty": null,
-      "source_hash": "921f41dcb79cc47de8894f1dc7ad25e19035cbdc6617146283e90e463f880cbb"
+      "commit": "eecaecff53f77c007c0f1a27fccd2a0bba2399a9",
+      "dirty": false,
+      "source_hash": "2df71e33c713432dac627f92b2ec249af54a0c59ee97789246682e0beb0e5102"
     },
     "active_task": null,
     "next_action": "Finish defining requirement-linked tasks, then run genesis plan check."
