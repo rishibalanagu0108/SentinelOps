@@ -15,7 +15,7 @@
     ],
     "trust_boundary": "local developer machine and disposable Docker environment",
     "created_at": "2026-11-23T17:27:12.743Z",
-    "updated_at": "2026-11-24T06:15:01.887Z"
+    "updated_at": "2026-11-24T06:22:24.357Z"
   },
   "policy": {
     "ponytail": "full",
@@ -29,11 +29,11 @@
     }
   },
   "lifecycle": {
-    "phase": "specification",
+    "phase": "planning",
     "status": "active",
-    "active_task": "SPEC-1",
+    "active_task": null,
     "blocker": null,
-    "next_action": "Ask the human to review SPEC.md, then record explicit specification approval."
+    "next_action": "Create requirement-linked implementation tasks with executable gates, then run genesis plan check."
   },
   "commands": {},
   "workflow": {
@@ -85,8 +85,8 @@
       ]
     },
     "plan_check": {
-      "at": "2026-11-23T17:59:42.893Z",
-      "source_hash": "c9ed4e2ec60804e3cbf58ee22a4eada6219734834d7bc5566977bc3f4491c75b"
+      "at": "2026-11-24T06:22:01.251Z",
+      "source_hash": "0c75105185b1588fd924751d4d07fcdc6c37f5c12cdcd90c014863bf154b5a9a"
     },
     "plan_approval": null
   },
@@ -95,7 +95,7 @@
       "id": "SPEC-1",
       "type": "specification",
       "path": "SPEC.md",
-      "status": "checked",
+      "status": "approved",
       "requirements": [
         "AC-1",
         "AC-10",
@@ -138,7 +138,12 @@
         "NFR-9"
       ],
       "source_hash": "e12cbadec7d4e08c7f37e1b8aa3cb68838c4233c8b4c6ae8e83a8e8313fbadcd",
-      "approval": null
+      "approval": {
+        "human": "Project owner",
+        "reason": "The user explicitly approved the revised alert-driven SentinelOps specification in the Codex chat on 2026-11-24.",
+        "at": "2026-11-24T06:21:13.009Z",
+        "source_hash": "e12cbadec7d4e08c7f37e1b8aa3cb68838c4233c8b4c6ae8e83a8e8313fbadcd"
+      }
     }
   ],
   "assumptions": [],
@@ -177,11 +182,12 @@
       "id": "DECISION-aa3a1a57",
       "title": "Incremental incident catalog",
       "text": "Implement the faulty payments deployment first, then database connection exhaustion, then Redis unavailability; run scenarios sequentially and reset between them.",
-      "status": "accepted",
+      "status": "superseded",
       "source": "User discussion in this Codex chat on 2026-11-23",
       "recorded_at": "2026-11-23T17:28:27.389Z",
       "paths": [],
-      "tags": []
+      "tags": [],
+      "superseded_by": "DECISION-3340c0f2"
     },
     {
       "id": "DECISION-c40854e0",
@@ -212,6 +218,17 @@
       "recorded_at": "2026-11-24T06:15:01.445Z",
       "paths": [],
       "tags": []
+    },
+    {
+      "id": "DECISION-3340c0f2",
+      "title": "Incremental failure-scenario catalog",
+      "text": "Implement SCN-001 faulty payments deployment first, then SCN-002 database connection exhaustion, then SCN-003 Redis unavailability; run scenarios sequentially and reset between them.",
+      "status": "accepted",
+      "source": "Revised SentinelOps terminology approved in Codex chat on 2026-11-24",
+      "recorded_at": "2026-11-24T06:22:01.113Z",
+      "paths": [],
+      "tags": [],
+      "supersedes": "DECISION-aa3a1a57"
     }
   ],
   "knowledge": [
@@ -229,7 +246,7 @@
     {
       "id": "SPEC-1",
       "outcome": "Produce an approved, implementation-ready product specification",
-      "state": "active",
+      "state": "done",
       "risk": "medium",
       "owner": null,
       "scope": [
@@ -242,8 +259,13 @@
           "id": "independent-review",
           "command": "",
           "mandatory": true,
-          "status": "pending",
-          "evidence": null,
+          "status": "pass",
+          "evidence": {
+            "human": "Project owner",
+            "reason": "The user explicitly approved the revised alert-driven SentinelOps specification in the Codex chat on 2026-11-24.",
+            "source_hash": "8736e7b650c63b7eacb95c11c203caf4eec756dcff199a7bd7acedb1ed54f73e",
+            "observed_at": "2026-11-24T06:21:13.009Z"
+          },
           "kind": "review"
         }
       ],
@@ -253,7 +275,7 @@
       "failures": [],
       "limitations": [],
       "created_at": "2026-11-23T17:27:12.744Z",
-      "updated_at": "2026-11-24T06:15:01.641Z"
+      "updated_at": "2026-11-24T06:21:13.009Z"
     },
     {
       "id": "FOUNDATION-1",
@@ -311,15 +333,15 @@
       "updated_at": "2026-11-23T17:59:37.260Z"
     },
     {
-      "id": "INCIDENT-1",
-      "outcome": "Add the scenario contract and reproducible faulty-payments-deployment incident",
+      "id": "SCENARIO-1",
+      "outcome": "Add the failure-scenario contract and reproducible faulty-payments-deployment scenario",
       "state": "queued",
       "risk": "low",
       "owner": null,
       "scope": [
         "scenarios",
-        "scripts/incident.py",
-        "scripts/verify_incident.py",
+        "scripts/scenario.py",
+        "scripts/verify_scenario.py",
         "Makefile",
         "compose.yaml"
       ],
@@ -346,7 +368,7 @@
           "scope": "payments service only",
           "environment": "disposable local application",
           "duration": "five consecutive trigger and reset cycles",
-          "observable": "INC-001 produces expected failures and cleanup restores the healthy baseline every time",
+          "observable": "SCN-001 produces expected failures and cleanup restores the healthy baseline every time",
           "gate": "faulty-deploy"
         }
       ],
@@ -354,13 +376,13 @@
         {
           "id": "faulty-deploy",
           "kind": "command",
-          "command": "python3 scripts/verify_incident.py INC-001 --repeat 5",
+          "command": "python3 scripts/verify_scenario.py SCN-001 --repeat 5",
           "mandatory": true,
           "status": "pending",
           "evidence": null
         }
       ],
-      "next_action": "Implement the smallest scenario runner and INC-001 without a plugin framework.",
+      "next_action": "Implement the smallest failure-scenario runner and SCN-001 without a plugin framework.",
       "blocker": null,
       "notes": [],
       "failures": [],
@@ -370,51 +392,59 @@
     },
     {
       "id": "OBSERVE-1",
-      "outcome": "Instrument the local application and expose correlated incident evidence",
+      "outcome": "Instrument the local application and prove alert-driven incident creation",
       "state": "queued",
       "risk": "low",
       "owner": null,
       "scope": [
         "services",
         "observability",
+        "sentinelops/intake",
         "compose.yaml",
-        "scripts/verify_observability.py"
+        "scripts/verify_observability.py",
+        "scripts/verify_alert_pipeline.py"
       ],
       "dependencies": [
-        "INCIDENT-1"
+        "SCENARIO-1"
       ],
       "requirements": [
         "FR-6",
         "FR-7",
+        "FR-17",
+        "FR-18",
+        "FR-19",
         "NFR-5",
-        "AC-3"
+        "NFR-9",
+        "AC-3",
+        "AC-10",
+        "AC-11"
       ],
       "inputs": [],
       "environment": [
-        "Local OpenTelemetry stack"
+        "Local OpenTelemetry, Prometheus, and Alertmanager stack"
       ],
       "scenarios": [
         {
-          "id": "correlated-evidence",
-          "actor": "incident investigator",
-          "scope": "INC-001 logs, metrics, traces, health, and deployment event",
-          "environment": "local OpenTelemetry stack",
-          "duration": "one incident run",
-          "observable": "the verifier retrieves correlated evidence for the known failure",
-          "gate": "incident-evidence"
+          "id": "alert-to-incident-pipeline",
+          "actor": "local operator",
+          "scope": "SCN-001 telemetry, alert routing, webhook validation, deduplication, and incident creation",
+          "environment": "local OpenTelemetry, Prometheus, Alertmanager, and SentinelOps stack",
+          "duration": "one failure-scenario run plus one duplicate and one invalid webhook delivery",
+          "observable": "SCN-001 produces correlated evidence and exactly one INC-* incident through the real alert pipeline; duplicate and invalid deliveries create no extra incident",
+          "gate": "alert-pipeline"
         }
       ],
       "gates": [
         {
-          "id": "incident-evidence",
+          "id": "alert-pipeline",
           "kind": "command",
-          "command": "python3 scripts/verify_observability.py INC-001",
+          "command": "python3 scripts/verify_alert_pipeline.py SCN-001",
           "mandatory": true,
           "status": "pending",
           "evidence": null
         }
       ],
-      "next_action": "Add only the telemetry needed to explain INC-001 and prove correlation.",
+      "next_action": "Add the minimum telemetry, Prometheus rule, Alertmanager route, webhook intake, and deduplication needed to turn SCN-001 into one incident.",
       "blocker": null,
       "notes": [],
       "failures": [],
@@ -424,13 +454,13 @@
     },
     {
       "id": "CATALOG-1",
-      "outcome": "Complete the initial sequential incident catalog and reliable reset behavior",
+      "outcome": "Complete the initial sequential failure-scenario catalog and reliable reset behavior",
       "state": "queued",
       "risk": "low",
       "owner": null,
       "scope": [
         "scenarios",
-        "scripts/incident.py",
+        "scripts/scenario.py",
         "scripts/verify_catalog.py",
         "compose.yaml"
       ],
@@ -449,18 +479,18 @@
       ],
       "scenarios": [
         {
-          "id": "initial-incident-catalog",
+          "id": "initial-failure-scenario-catalog",
           "actor": "developer",
-          "scope": "INC-001, INC-002, and INC-003",
+          "scope": "SCN-001, SCN-002, and SCN-003",
           "environment": "disposable local application",
           "duration": "five sequential runs per scenario",
-          "observable": "each incident exposes expected symptoms and resets to the verified baseline",
-          "gate": "incident-catalog"
+          "observable": "each failure scenario exposes expected symptoms and resets to the verified baseline",
+          "gate": "scenario-catalog"
         }
       ],
       "gates": [
         {
-          "id": "incident-catalog",
+          "id": "scenario-catalog",
           "kind": "command",
           "command": "python3 scripts/verify_catalog.py --repeat 5",
           "mandatory": true,
@@ -577,7 +607,7 @@
         {
           "id": "approval-gated-rollback",
           "actor": "incident approver",
-          "scope": "INC-001 rollback only",
+          "scope": "rollback for the incident created from SCN-001 only",
           "environment": "disposable local application",
           "duration": "one denied and one approved remediation attempt",
           "observable": "unapproved mutation is blocked and approved rollback restores healthy payments",
@@ -602,7 +632,7 @@
           "evidence": null
         }
       ],
-      "next_action": "Implement the approval boundary and only the INC-001 rollback action.",
+      "next_action": "Implement the approval boundary and only the rollback for an incident created from SCN-001.",
       "blocker": null,
       "notes": [],
       "failures": [],
@@ -638,7 +668,7 @@
         {
           "id": "worker-restart-after-approval",
           "actor": "reliability tester",
-          "scope": "approved INC-001 remediation workflow",
+          "scope": "approved remediation workflow for an incident created from SCN-001",
           "environment": "local Temporal development runtime",
           "duration": "one forced worker termination and restart",
           "observable": "workflow resumes and rollback executes exactly once",
@@ -702,7 +732,7 @@
         {
           "id": "fresh-developer-acceptance",
           "actor": "developer unfamiliar with the repository",
-          "scope": "setup, start, incident, inspection, reset, stop, and recorded evaluation",
+          "scope": "setup, start, scenario trigger, incident inspection, reset, stop, and recorded evaluation",
           "environment": "fresh local checkout without an LLM API key",
           "duration": "one documented end-to-end session",
           "observable": "the executable acceptance command completes all required local workflows",
@@ -737,14 +767,14 @@
   "incidents": [],
   "discovery": null,
   "checkpoint": {
-    "at": "2026-11-24T06:15:01.859Z",
+    "at": "2026-11-24T06:22:24.329Z",
     "revision": {
-      "commit": "813288f9d30e2eb7d72747cb934a17d1339e7aa6",
+      "commit": "ede4153069a85fc665136672c1951ee3c23523f8",
       "dirty": true,
       "source_hash": "8736e7b650c63b7eacb95c11c203caf4eec756dcff199a7bd7acedb1ed54f73e"
     },
-    "active_task": "SPEC-1",
-    "next_action": "Ask the human to review SPEC.md, then record explicit specification approval."
+    "active_task": null,
+    "next_action": "Create requirement-linked implementation tasks with executable gates, then run genesis plan check."
   },
   "legacy": null
 }
