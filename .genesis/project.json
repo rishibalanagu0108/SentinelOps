@@ -15,7 +15,7 @@
     ],
     "trust_boundary": "local developer machine and disposable Docker environment",
     "created_at": "2026-11-23T17:27:12.743Z",
-    "updated_at": "2026-11-23T18:18:18.965Z"
+    "updated_at": "2026-11-24T06:15:01.887Z"
   },
   "policy": {
     "ponytail": "full",
@@ -29,21 +29,23 @@
     }
   },
   "lifecycle": {
-    "phase": "planning",
+    "phase": "specification",
     "status": "active",
-    "active_task": null,
+    "active_task": "SPEC-1",
     "blocker": null,
-    "next_action": "Finish defining requirement-linked tasks, then run genesis plan check."
+    "next_action": "Ask the human to review SPEC.md, then record explicit specification approval."
   },
   "commands": {},
   "workflow": {
     "type": "new-product",
     "started_at": "2026-11-23T17:27:12.744Z",
     "spec_check": {
-      "at": "2026-11-23T17:28:33.860Z",
-      "source_hash": "f751e00d59318b0d152688a0d2c1d88610bdd4227bc47498d9c04a120af30960",
+      "at": "2026-11-24T06:15:01.641Z",
+      "source_hash": "e12cbadec7d4e08c7f37e1b8aa3cb68838c4233c8b4c6ae8e83a8e8313fbadcd",
       "requirements": [
         "AC-1",
+        "AC-10",
+        "AC-11",
         "AC-2",
         "AC-3",
         "AC-4",
@@ -60,6 +62,9 @@
         "FR-14",
         "FR-15",
         "FR-16",
+        "FR-17",
+        "FR-18",
+        "FR-19",
         "FR-2",
         "FR-3",
         "FR-4",
@@ -75,7 +80,8 @@
         "NFR-5",
         "NFR-6",
         "NFR-7",
-        "NFR-8"
+        "NFR-8",
+        "NFR-9"
       ]
     },
     "plan_check": {
@@ -89,9 +95,11 @@
       "id": "SPEC-1",
       "type": "specification",
       "path": "SPEC.md",
-      "status": "approved",
+      "status": "checked",
       "requirements": [
         "AC-1",
+        "AC-10",
+        "AC-11",
         "AC-2",
         "AC-3",
         "AC-4",
@@ -108,6 +116,9 @@
         "FR-14",
         "FR-15",
         "FR-16",
+        "FR-17",
+        "FR-18",
+        "FR-19",
         "FR-2",
         "FR-3",
         "FR-4",
@@ -123,15 +134,11 @@
         "NFR-5",
         "NFR-6",
         "NFR-7",
-        "NFR-8"
+        "NFR-8",
+        "NFR-9"
       ],
-      "source_hash": "f751e00d59318b0d152688a0d2c1d88610bdd4227bc47498d9c04a120af30960",
-      "approval": {
-        "human": "Project owner",
-        "reason": "The user explicitly approved the SentinelOps specification in the Codex chat on 2026-11-23.",
-        "at": "2026-11-23T17:58:22.282Z",
-        "source_hash": "f751e00d59318b0d152688a0d2c1d88610bdd4227bc47498d9c04a120af30960"
-      }
+      "source_hash": "e12cbadec7d4e08c7f37e1b8aa3cb68838c4233c8b4c6ae8e83a8e8313fbadcd",
+      "approval": null
     }
   ],
   "assumptions": [],
@@ -185,6 +192,26 @@
       "recorded_at": "2026-11-23T17:28:27.526Z",
       "paths": [],
       "tags": []
+    },
+    {
+      "id": "DECISION-76f0e66e",
+      "title": "Separate failure scenarios from incidents",
+      "text": "Use SCN-* for deliberately injected local failure scenarios and reserve INC-* for incident records SentinelOps creates from accepted alerts.",
+      "status": "accepted",
+      "source": "User clarification in Codex chat on 2026-11-24",
+      "recorded_at": "2026-11-24T06:15:01.287Z",
+      "paths": [],
+      "tags": []
+    },
+    {
+      "id": "DECISION-68d3570f",
+      "title": "Alert-driven local incident creation",
+      "text": "For the local MVP, Prometheus evaluates versioned metric rules, Alertmanager posts firing and resolved notifications to the SentinelOps webhook, and SentinelOps validates and deduplicates alerts before creating or updating an incident.",
+      "status": "accepted",
+      "source": "User clarification in Codex chat on 2026-11-24",
+      "recorded_at": "2026-11-24T06:15:01.445Z",
+      "paths": [],
+      "tags": []
     }
   ],
   "knowledge": [
@@ -202,7 +229,7 @@
     {
       "id": "SPEC-1",
       "outcome": "Produce an approved, implementation-ready product specification",
-      "state": "done",
+      "state": "active",
       "risk": "medium",
       "owner": null,
       "scope": [
@@ -215,13 +242,8 @@
           "id": "independent-review",
           "command": "",
           "mandatory": true,
-          "status": "pass",
-          "evidence": {
-            "human": "Project owner",
-            "reason": "The user explicitly approved the SentinelOps specification in the Codex chat on 2026-11-23.",
-            "source_hash": "3bc358067adffbe0abe6a42f96f2f989f8d5d152e08bccb2e0b9119d79e26b14",
-            "observed_at": "2026-11-23T17:58:22.282Z"
-          },
+          "status": "pending",
+          "evidence": null,
           "kind": "review"
         }
       ],
@@ -231,7 +253,7 @@
       "failures": [],
       "limitations": [],
       "created_at": "2026-11-23T17:27:12.744Z",
-      "updated_at": "2026-11-23T17:58:22.282Z"
+      "updated_at": "2026-11-24T06:15:01.641Z"
     },
     {
       "id": "FOUNDATION-1",
@@ -715,14 +737,14 @@
   "incidents": [],
   "discovery": null,
   "checkpoint": {
-    "at": "2026-11-23T18:18:18.928Z",
+    "at": "2026-11-24T06:15:01.859Z",
     "revision": {
-      "commit": "eecaecff53f77c007c0f1a27fccd2a0bba2399a9",
-      "dirty": false,
-      "source_hash": "2df71e33c713432dac627f92b2ec249af54a0c59ee97789246682e0beb0e5102"
+      "commit": "813288f9d30e2eb7d72747cb934a17d1339e7aa6",
+      "dirty": true,
+      "source_hash": "8736e7b650c63b7eacb95c11c203caf4eec756dcff199a7bd7acedb1ed54f73e"
     },
-    "active_task": null,
-    "next_action": "Finish defining requirement-linked tasks, then run genesis plan check."
+    "active_task": "SPEC-1",
+    "next_action": "Ask the human to review SPEC.md, then record explicit specification approval."
   },
   "legacy": null
 }

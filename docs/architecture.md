@@ -21,11 +21,11 @@ flowchart TD
         Payments --> Redis
     end
 
-    subgraph Incidents["Incident lab"]
-        Controller["Incident Controller"]
-        I1["INC-001<br/>Faulty Deployment"]
-        I2["INC-002<br/>Database Exhaustion"]
-        I3["INC-003<br/>Redis Unavailable"]
+    subgraph Scenarios["Failure scenario lab"]
+        Controller["Failure Scenario Controller"]
+        I1["SCN-001<br/>Faulty Deployment"]
+        I2["SCN-002<br/>Database Exhaustion"]
+        I3["SCN-003<br/>Redis Unavailable"]
 
         Controller --> I1
         Controller --> I2
@@ -38,17 +38,32 @@ flowchart TD
     subgraph Telemetry["Observability"]
         OTel["OpenTelemetry Collector"]
         Logs["Logs"]
-        Metrics["Metrics"]
         Traces["Traces"]
         Events["Deployment Events"]
+        Prometheus["Prometheus Metrics"]
+        Rules["Alert Rules"]
+        Alertmanager["Alertmanager"]
 
         OTel --> Logs
-        OTel --> Metrics
         OTel --> Traces
         OTel --> Events
+        OTel --> Prometheus
+        Prometheus --> Rules
+        Rules --> Alertmanager
     end
 
     Local --> OTel
+
+    subgraph Intake["SentinelOps alert intake"]
+        Webhook["POST /api/alerts"]
+        Validate["Validate and Deduplicate"]
+        Incident["Create or Update Incident<br/>INC-date-sequence"]
+
+        Webhook --> Validate
+        Validate --> Incident
+    end
+
+    Alertmanager -->|"Webhook"| Webhook
 
     subgraph Agents["SentinelOps investigation"]
         Orchestrator["Incident Orchestrator"]
@@ -61,7 +76,11 @@ flowchart TD
         Investigator --> Diagnosis
     end
 
-    Telemetry --> Orchestrator
+    Incident --> Orchestrator
+    Logs --> Investigator
+    Traces --> Investigator
+    Events --> Investigator
+    Prometheus --> Investigator
     Diagnosis --> Findings["Evidence-backed Diagnosis<br/>Confidence and Alternatives"]
     Findings --> Risk["Risk and Policy Check"]
     Risk --> Approval{"Human Approval"}
@@ -100,5 +119,8 @@ flowchart TD
         PagerDuty["PagerDuty"]
     end
 
-    Future -. "Future connectors" .-> Orchestrator
+    Datadog -. "External alert" .-> Webhook
+    PagerDuty -. "External alert" .-> Webhook
+    Kubernetes -. "Runtime evidence" .-> Investigator
+    GitHub -. "Deployment evidence" .-> Investigator
 ```
