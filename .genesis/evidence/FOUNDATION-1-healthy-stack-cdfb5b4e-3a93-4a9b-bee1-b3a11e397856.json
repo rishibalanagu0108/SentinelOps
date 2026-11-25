@@ -1,0 +1,32 @@
+{
+  "task": "FOUNDATION-1",
+  "gate": "healthy-stack",
+  "kind": "command",
+  "attempt": "cdfb5b4e-3a93-4a9b-bee1-b3a11e397856",
+  "command": "python3 scripts/verify_stack.py",
+  "started_at": "2026-11-24T16:02:34.655Z",
+  "observed_at": "2026-11-24T16:02:36.519Z",
+  "exit_code": 0,
+  "signal": null,
+  "stdout": "Healthy SentinelOps stack: gateway, orders, payments, postgres, redis\n",
+  "stderr": "",
+  "failure": null,
+  "receipt": null,
+  "revision": {
+    "commit": "6da20ba4d7084911a9924ef9edfde9ec7daf0d4d",
+    "dirty": true
+  },
+  "source_hash": "2a1493573e3f4e85ad0d7813ff733594db61b81b9486edae986d9dce42589e29",
+  "before_hash": "2a1493573e3f4e85ad0d7813ff733594db61b81b9486edae986d9dce42589e29",
+  "config_hash": "7058664c406d2eb05129e56ed4c9a440cab45e7370f68ac5e7837282ae384487",
+  "environment": {
+    "node": "v24.13.0",
+    "platform": "linux",
+    "arch": "x64",
+    "verifier": "358371454f03eb4fdfd3eda3cb1d18cb1dd8fe9445404bb3d3047267b3977eb9",
+    "variables": {
+      "Local Docker Compose": "5a42f60a790863f8c06e57327bf7116900a94dc23154b1e785a0b734d7afaf74"
+    }
+  },
+  "hash": "b2c3fe0a7f0591f950588d7464f422e879050cf6f3880e84ac4c01ed56df3c63"
+}

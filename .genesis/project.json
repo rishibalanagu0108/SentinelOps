@@ -15,7 +15,7 @@
     ],
     "trust_boundary": "local developer machine and disposable Docker environment",
     "created_at": "2026-11-23T17:27:12.743Z",
-    "updated_at": "2026-11-24T06:22:24.357Z"
+    "updated_at": "2026-11-25T16:59:40.190Z"
   },
   "policy": {
     "ponytail": "full",
@@ -29,19 +29,19 @@
     }
   },
   "lifecycle": {
-    "phase": "planning",
+    "phase": "build",
     "status": "active",
-    "active_task": null,
+    "active_task": "SCENARIO-1",
     "blocker": null,
-    "next_action": "Create requirement-linked implementation tasks with executable gates, then run genesis plan check."
+    "next_action": "Implement the smallest failure-scenario runner and SCN-001 without a plugin framework."
   },
   "commands": {},
   "workflow": {
     "type": "new-product",
     "started_at": "2026-11-23T17:27:12.744Z",
     "spec_check": {
-      "at": "2026-11-24T06:15:01.641Z",
-      "source_hash": "e12cbadec7d4e08c7f37e1b8aa3cb68838c4233c8b4c6ae8e83a8e8313fbadcd",
+      "at": "2026-11-24T15:35:31.423Z",
+      "source_hash": "161971b5500f98e4c6ab5213b53370cc83870f84af353892234c081150aa9a92",
       "requirements": [
         "AC-1",
         "AC-10",
@@ -85,10 +85,15 @@
       ]
     },
     "plan_check": {
-      "at": "2026-11-24T06:22:01.251Z",
+      "at": "2026-11-24T15:35:31.740Z",
       "source_hash": "0c75105185b1588fd924751d4d07fcdc6c37f5c12cdcd90c014863bf154b5a9a"
     },
-    "plan_approval": null
+    "plan_approval": {
+      "human": "Project owner",
+      "reason": "The user explicitly said 'Go ahead then' after being told the current Genesis implementation plan required explicit approval.",
+      "at": "2026-11-24T15:59:35.389Z",
+      "source_hash": "0c75105185b1588fd924751d4d07fcdc6c37f5c12cdcd90c014863bf154b5a9a"
+    }
   },
   "artifacts": [
     {
@@ -137,12 +142,12 @@
         "NFR-8",
         "NFR-9"
       ],
-      "source_hash": "e12cbadec7d4e08c7f37e1b8aa3cb68838c4233c8b4c6ae8e83a8e8313fbadcd",
+      "source_hash": "161971b5500f98e4c6ab5213b53370cc83870f84af353892234c081150aa9a92",
       "approval": {
         "human": "Project owner",
-        "reason": "The user explicitly approved the revised alert-driven SentinelOps specification in the Codex chat on 2026-11-24.",
-        "at": "2026-11-24T06:21:13.009Z",
-        "source_hash": "e12cbadec7d4e08c7f37e1b8aa3cb68838c4233c8b4c6ae8e83a8e8313fbadcd"
+        "reason": "The user requested reconciliation of the stale specification status label on 2026-11-24; requirements and product scope are unchanged.",
+        "at": "2026-11-24T15:35:31.578Z",
+        "source_hash": "161971b5500f98e4c6ab5213b53370cc83870f84af353892234c081150aa9a92"
       }
     }
   ],
@@ -262,9 +267,9 @@
           "status": "pass",
           "evidence": {
             "human": "Project owner",
-            "reason": "The user explicitly approved the revised alert-driven SentinelOps specification in the Codex chat on 2026-11-24.",
-            "source_hash": "8736e7b650c63b7eacb95c11c203caf4eec756dcff199a7bd7acedb1ed54f73e",
-            "observed_at": "2026-11-24T06:21:13.009Z"
+            "reason": "The user requested reconciliation of the stale specification status label on 2026-11-24; requirements and product scope are unchanged.",
+            "source_hash": "1f9c72116c70ac6f4460dd08bd1c95bd5b6b941ab423d23c752934576655e1c2",
+            "observed_at": "2026-11-24T15:35:31.578Z"
           },
           "kind": "review"
         }
@@ -275,12 +280,12 @@
       "failures": [],
       "limitations": [],
       "created_at": "2026-11-23T17:27:12.744Z",
-      "updated_at": "2026-11-24T06:21:13.009Z"
+      "updated_at": "2026-11-24T15:35:31.578Z"
     },
     {
       "id": "FOUNDATION-1",
       "outcome": "Create the healthy disposable local application and repeatable lifecycle commands",
-      "state": "queued",
+      "state": "done",
       "risk": "low",
       "owner": null,
       "scope": [
@@ -320,8 +325,14 @@
           "kind": "command",
           "command": "python3 scripts/verify_stack.py",
           "mandatory": true,
-          "status": "pending",
-          "evidence": null
+          "status": "pass",
+          "evidence": {
+            "path": ".genesis/evidence/FOUNDATION-1-healthy-stack-cdfb5b4e-3a93-4a9b-bee1-b3a11e397856.json",
+            "hash": "b2c3fe0a7f0591f950588d7464f422e879050cf6f3880e84ac4c01ed56df3c63",
+            "source_hash": "2a1493573e3f4e85ad0d7813ff733594db61b81b9486edae986d9dce42589e29",
+            "config_hash": "7058664c406d2eb05129e56ed4c9a440cab45e7370f68ac5e7837282ae384487",
+            "observed_at": "2026-11-24T16:02:36.519Z"
+          }
         }
       ],
       "next_action": "Implement only the healthy local stack and its executable health verification.",
@@ -330,12 +341,19 @@
       "failures": [],
       "limitations": [],
       "created_at": "2026-11-23T17:59:37.259Z",
-      "updated_at": "2026-11-23T17:59:37.260Z"
+      "updated_at": "2026-11-24T16:02:46.996Z",
+      "base_manifest": {
+        ".gitignore": "4812d83f5ee365be057d4a3668c85916424225be038a862214e32604c69463b5",
+        "AGENTS.md": "a67615d8ed1ed3dd1b0d2cbf874ceb8d4a285c3335cdfc2d785ec80a06daecc1",
+        "README.md": "1f5eaaa75b0e95f7c80a3cecca3382d9856e184319171b313e0522ef28c552fa",
+        "SPEC.md": "d5543a770d0a6d28b3976810b0084ddbee97b6376faccd7f74d28ab4ce84deb5",
+        "docs/architecture.md": "7de5fb0fe6741af3d94caaaab16fd2f9a48ec0c2637e8f80632b9a550e642a23"
+      }
     },
     {
       "id": "SCENARIO-1",
       "outcome": "Add the failure-scenario contract and reproducible faulty-payments-deployment scenario",
-      "state": "queued",
+      "state": "active",
       "risk": "low",
       "owner": null,
       "scope": [
@@ -388,7 +406,21 @@
       "failures": [],
       "limitations": [],
       "created_at": "2026-11-23T17:59:37.444Z",
-      "updated_at": "2026-11-23T17:59:37.444Z"
+      "updated_at": "2026-11-23T17:59:37.444Z",
+      "base_manifest": {
+        ".gitignore": "4812d83f5ee365be057d4a3668c85916424225be038a862214e32604c69463b5",
+        "AGENTS.md": "a67615d8ed1ed3dd1b0d2cbf874ceb8d4a285c3335cdfc2d785ec80a06daecc1",
+        "Makefile": "3690bfeb0667c4c14033ea38fe6f68eefa92044495f621a9969151290f817841",
+        "README.md": "c9505b0fdf860bc07168dd774db44ae943881584f52d31306f21a64089321f43",
+        "SPEC.md": "d5543a770d0a6d28b3976810b0084ddbee97b6376faccd7f74d28ab4ce84deb5",
+        "compose.yaml": "e4010bda143be6dc6bb983cd32b5ef7d782022ae7b0a2bc07700a24b563e3b9f",
+        "docs/architecture.md": "7de5fb0fe6741af3d94caaaab16fd2f9a48ec0c2637e8f80632b9a550e642a23",
+        "scripts/verify_stack.py": "d59ac40fd3c52118505f70b1f9c34c4f54979a70cdc55c2cfb10e9497c31811c",
+        "services/.dockerignore": "cbaf32ab2bf881b6199f17e5e4a54877a6e1039641464f26e338fff9dbb5728d",
+        "services/Dockerfile": "6f1de6c7b9f693fd393451890498350a957e9f85dc7b121605c96935c46ba34a",
+        "services/app.py": "61f25caef5722926d4d2ed2a98dda356bbba85eb6b4a7bb26b39044ac4533bbe",
+        "services/requirements.txt": "1221c4c6991e9fedf65d0d7287c588679a64153aa5074923e8ea8b5ac4bffd54"
+      }
     },
     {
       "id": "OBSERVE-1",
@@ -761,20 +793,47 @@
   "learning_proposals": [],
   "cleanup_proposals": [],
   "controls": [],
-  "attempts": [],
+  "attempts": [
+    {
+      "id": "cdfb5b4e-3a93-4a9b-bee1-b3a11e397856",
+      "task": "FOUNDATION-1",
+      "kind": "gate",
+      "command": "python3 scripts/verify_stack.py",
+      "timeout": 120000,
+      "authorization": null,
+      "pid": 27648,
+      "child_pid": 27660,
+      "started_at": "2026-11-24T16:02:34.655Z",
+      "status": "passed",
+      "before_hash": "2a1493573e3f4e85ad0d7813ff733594db61b81b9486edae986d9dce42589e29",
+      "config_hash": "7058664c406d2eb05129e56ed4c9a440cab45e7370f68ac5e7837282ae384487",
+      "environment": {
+        "node": "v24.13.0",
+        "platform": "linux",
+        "arch": "x64",
+        "verifier": "358371454f03eb4fdfd3eda3cb1d18cb1dd8fe9445404bb3d3047267b3977eb9",
+        "variables": {
+          "Local Docker Compose": "5a42f60a790863f8c06e57327bf7116900a94dc23154b1e785a0b734d7afaf74"
+        }
+      },
+      "cost": null,
+      "stop_reason": null,
+      "ended_at": "2026-11-24T16:02:36.519Z"
+    }
+  ],
   "authorizations": [],
   "experiments": [],
   "incidents": [],
   "discovery": null,
   "checkpoint": {
-    "at": "2026-11-24T06:22:24.329Z",
+    "at": "2026-11-25T16:59:40.160Z",
     "revision": {
-      "commit": "ede4153069a85fc665136672c1951ee3c23523f8",
+      "commit": "6da20ba4d7084911a9924ef9edfde9ec7daf0d4d",
       "dirty": true,
-      "source_hash": "8736e7b650c63b7eacb95c11c203caf4eec756dcff199a7bd7acedb1ed54f73e"
+      "source_hash": "2a1493573e3f4e85ad0d7813ff733594db61b81b9486edae986d9dce42589e29"
     },
-    "active_task": null,
-    "next_action": "Create requirement-linked implementation tasks with executable gates, then run genesis plan check."
+    "active_task": "SCENARIO-1",
+    "next_action": "Implement the smallest failure-scenario runner and SCN-001 without a plugin framework."
   },
   "legacy": null
 }

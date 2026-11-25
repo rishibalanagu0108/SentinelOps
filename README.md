@@ -3,8 +3,8 @@
 SentinelOps is a local-first environment for developing and evaluating safe,
 evidence-backed incident-response automation.
 
-The repository uses a Genesis specification-first workflow. Product
-implementation has not started.
+The repository uses a Genesis specification-first workflow. The healthy local
+application foundation is the first implementation slice.
 
 ## Project documents
 
@@ -25,6 +25,22 @@ implementation has not started.
 
 External production connectors and unattended remediation are deliberately
 outside the initial release.
+
+## Run the healthy local stack
+
+Prerequisites: Docker with Compose and Python 3.12.
+
+```bash
+make start
+make status
+make verify
+make stop
+```
+
+`make start` builds and starts the API gateway, orders service, payments
+service, PostgreSQL, and Redis. Only the gateway is exposed to the host, at
+`http://127.0.0.1:8000`. Each application health check verifies its downstream
+dependencies, and `make verify` confirms all five containers are healthy.
 
 ## Local incident flow
 

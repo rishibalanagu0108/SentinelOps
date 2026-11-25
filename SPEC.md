@@ -1,6 +1,6 @@
 # Product specification — SentinelOps
 
-> Status: draft. A coding agent must not implement product code until this specification is approved through Genesis.
+> Status: approved through Genesis. Product implementation remains blocked until the Genesis plan is explicitly approved.
 
 ## Problem
 

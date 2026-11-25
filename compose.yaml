@@ -1,0 +1,72 @@
+name: sentinelops
+
+x-python-service: &python-service
+  build: ./services
+  image: sentinelops/local-service
+  init: true
+  healthcheck:
+    test:
+      - CMD
+      - python
+      - -c
+      - "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=3)"
+    interval: 5s
+    timeout: 4s
+    retries: 12
+    start_period: 5s
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: sentinelops
+      POSTGRES_USER: sentinelops
+      POSTGRES_HOST_AUTH_METHOD: trust
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sentinelops -d sentinelops"]
+      interval: 5s
+      timeout: 4s
+      retries: 12
+      start_period: 5s
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 4s
+      retries: 12
+      start_period: 5s
+
+  payments:
+    <<: *python-service
+    environment:
+      SERVICE_NAME: payments
+      TCP_DEPENDENCIES: redis:6379
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  orders:
+    <<: *python-service
+    environment:
+      SERVICE_NAME: orders
+      TCP_DEPENDENCIES: postgres:5432
+      HTTP_DEPENDENCIES: http://payments:8000/health
+    depends_on:
+      payments:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+  gateway:
+    <<: *python-service
+    environment:
+      SERVICE_NAME: gateway
+      HTTP_DEPENDENCIES: http://orders:8000/health
+    depends_on:
+      orders:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8000:8000"
